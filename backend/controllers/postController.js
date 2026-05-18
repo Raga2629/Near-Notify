@@ -1,5 +1,6 @@
 import Post from '../models/Post.js';
 import User from '../models/User.js';
+import Notification from '../models/Notification.js';
 
 // Simple Spam Detection Helper
 const checkSuspicious = (text) => {
@@ -39,12 +40,18 @@ export const createPost = async (req, res) => {
       expiryDate,
       isSuspicious,
       createdBy: req.user._id,
-      status: 'pending' // Default status per requirements
+      status: isSuspicious ? 'pending' : 'approved' // Auto-approve normal posts
     });
 
     // Notify admins (Socket.io) about new pending post
     if (req.io) {
-       req.io.emit('new_pending_post', post);
+      req.io.emit('new_pending_post', post);
+      // Broadcast new post notification to all connected users
+      req.io.emit('new_nearby_post', {
+        title: `New ${post.category} post nearby`,
+        message: post.title,
+        type: 'new_post',
+      });
     }
 
     res.status(201).json(post);
@@ -109,5 +116,32 @@ export const getPostById = async (req, res) => {
     res.json(post);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Get AI summary of recent posts
+// @route   GET /posts/summary
+// @access  Public
+export const getPostSummary = async (req, res) => {
+  try {
+    const recentPosts = await Post.find({ status: 'approved' })
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    if (recentPosts.length === 0) {
+      return res.json({ summary: "Things are quiet nearby. Be the first to start a conversation or post a job!" });
+    }
+
+    const jobCount = recentPosts.filter(p => p.category === 'Jobs').length;
+    const eventCount = recentPosts.filter(p => p.category === 'Events').length;
+
+    let summaryText = `There are ${recentPosts.length} new nearby posts. `;
+    if (jobCount > 0) summaryText += `Including ${jobCount} new job opportunities. `;
+    if (eventCount > 0) summaryText += `Also ${eventCount} fresh events coming up. `;
+    summaryText += "Check them out on the dashboard!";
+
+    res.json({ summary: summaryText });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error fetching summary', error: error.message });
   }
 };

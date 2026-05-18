@@ -1,5 +1,6 @@
 import Chat from '../models/Chat.js';
 import Post from '../models/Post.js';
+import Notification from '../models/Notification.js';
 
 // @desc    Send a message
 // @route   POST /chat/send
@@ -27,6 +28,19 @@ export const sendMessage = async (req, res) => {
       { path: 'sender', select: 'name' },
       { path: 'receiver', select: 'name' }
     ]);
+
+    // Create notification for receiver
+    const notif = await Notification.create({
+      userId: post.createdBy._id,
+      title: `New message from ${req.user.name}`,
+      message: `"${message.substring(0, 60)}${message.length > 60 ? '...' : ''}"`,
+      type: 'chat',
+    });
+
+    // Push via socket if receiver is connected
+    if (req.io) {
+      req.io.to(`user_${post.createdBy._id}`).emit('new_notification', notif);
+    }
 
     res.status(201).json(populated);
   } catch (error) {

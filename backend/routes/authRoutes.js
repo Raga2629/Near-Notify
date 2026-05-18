@@ -18,7 +18,7 @@ router.get('/google', passport.authenticate('google', {
 
 // Step 2: Google callback
 router.get('/google/callback',
-  passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:5173/login?error=google_failed' }),
+  passport.authenticate('google', { session: false, failureRedirect: 'http://localhost:5175/login?error=google_failed' }),
   (req, res) => {
     const user = req.user;
     const token = generateToken(user._id);
@@ -29,11 +29,12 @@ router.get('/google/callback',
       email: user.email,
       role: user.role,
       trustScore: user.trustScore,
+      trustBadge: user.trustScore >= 81 ? 'Highly Trusted' : user.trustScore >= 61 ? 'Trusted' : 'New',
       avatar: user.avatar,
       token,
     }));
 
-    const frontendUrl = 'http://localhost:5173';
+    const frontendUrl = 'http://localhost:5175';
     res.redirect(`${frontendUrl}/auth/callback?user=${userData}`);
   }
 );

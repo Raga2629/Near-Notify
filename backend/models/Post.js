@@ -28,7 +28,7 @@ const postSchema = new mongoose.Schema({
   expiryDate: { type: Date, required: true },
   status: { 
     type: String, 
-    enum: ['pending', 'approved', 'rejected'],
+    enum: ['pending', 'approved', 'rejected', 'expired'],
     default: 'pending' 
   },
   isSuspicious: { type: Boolean, default: false },

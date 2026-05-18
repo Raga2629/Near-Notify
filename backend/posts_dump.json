@@ -1,0 +1,171 @@
+[
+  {
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        78.38464,
+        17.5425
+      ]
+    },
+    "_id": "69c8d1491bf1c72af32ee312",
+    "title": "Software Developer Needed",
+    "description": "Looking for a React developer for a 3 month project",
+    "category": "Jobs",
+    "radius": 1000,
+    "status": "approved",
+    "rejectionReason": null,
+    "expiresAt": "2026-04-30T00:00:00.000Z",
+    "isExpired": false,
+    "author": "69c8c01abc1c7c56d546d8cf",
+    "reports": [],
+    "createdAt": "2026-03-29T07:14:17.639Z",
+    "updatedAt": "2026-04-04T19:38:27.439Z",
+    "__v": 0,
+    "expiryDate": "2026-12-31T00:00:00.000Z",
+    "createdBy": "69c8c01abc1c7c56d546d8cf",
+    "contact": "9000000001",
+    "isSuspicious": false
+  },
+  {
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        79.56668113908458,
+        18.01650291724235
+      ]
+    },
+    "_id": "69c8fa8be348ca674d7532d6",
+    "title": "painter",
+    "description": "paint work for a new building",
+    "category": "Jobs",
+    "radius": 1000,
+    "status": "approved",
+    "rejectionReason": null,
+    "expiresAt": "2026-04-15T04:40:00.000Z",
+    "isExpired": false,
+    "author": "69c8f946e348ca674d7532a9",
+    "reports": [],
+    "createdAt": "2026-03-29T10:10:19.500Z",
+    "updatedAt": "2026-04-04T19:38:27.452Z",
+    "__v": 0,
+    "createdBy": "69c8c01abc1c7c56d546d8cf",
+    "contact": "9000000003",
+    "expiryDate": "2026-12-31T00:00:00.000Z",
+    "isSuspicious": false
+  },
+  {
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        78.38464,
+        17.5425
+      ]
+    },
+    "_id": "69c900c4e348ca674d753343",
+    "title": "construction work",
+    "description": "Building construction labour work involves specialized and general tasks including site preparation, excavation, bricklaying, steel fixing, plumbing, electrical, and finishing works",
+    "category": "Jobs",
+    "radius": 2000,
+    "status": "approved",
+    "rejectionReason": null,
+    "expiresAt": "2026-04-29T04:30:00.000Z",
+    "isExpired": false,
+    "author": "69c8f946e348ca674d7532a9",
+    "reports": [],
+    "createdAt": "2026-03-29T10:36:52.694Z",
+    "updatedAt": "2026-04-04T19:38:27.450Z",
+    "__v": 0,
+    "expiryDate": "2026-12-31T00:00:00.000Z",
+    "createdBy": "69c8c01abc1c7c56d546d8cf",
+    "contact": "9000000002",
+    "isSuspicious": false
+  },
+  {
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        78.3226155290945,
+        17.238948187121533
+      ]
+    },
+    "_id": "69cc7c8ad0f650591011f60c",
+    "title": "Construction Labour",
+    "description": "need a skilled labour, can do all works related to construction of a buildin",
+    "category": "Jobs",
+    "radius": 4000,
+    "contact": "865412379",
+    "expiryDate": "2026-12-31T00:00:00.000Z",
+    "status": "approved",
+    "isSuspicious": false,
+    "createdBy": "69cc7be7d0f650591011f608",
+    "createdAt": "2026-04-01T02:01:46.779Z",
+    "updatedAt": "2026-04-04T19:20:19.295Z",
+    "__v": 0
+  },
+  {
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        78.38461423806027,
+        17.542502859478326
+      ]
+    },
+    "_id": "69cc9538006be61a0d3e77f7",
+    "title": "Waiter in a function",
+    "description": "The job describes that the jober need to serve the food the customers in a function under a catering service. payment will be hour based, more hours more money accordingly. Minimum amount for day was - Rs.500",
+    "category": "Jobs",
+    "radius": 3000,
+    "contact": "789546123",
+    "expiryDate": "2026-12-31T00:00:00.000Z",
+    "status": "approved",
+    "isSuspicious": false,
+    "createdBy": "69cc9454006be61a0d3e77f3",
+    "createdAt": "2026-04-01T03:47:04.635Z",
+    "updatedAt": "2026-04-04T19:20:19.295Z",
+    "__v": 0
+  },
+  {
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        78.384608,
+        17.542507333333337
+      ]
+    },
+    "_id": "69f48244cd894c8fed79fcd1",
+    "title": "Free Yoga Session Tomorrow",
+    "description": "Join us for a free morning yoga session at the community park at 6 AM. Open for all age",
+    "category": "Events",
+    "radius": 1500,
+    "contact": "9123456789",
+    "expiryDate": "2026-05-02T10:36:52.851Z",
+    "status": "approved",
+    "isSuspicious": null,
+    "createdBy": "69f481bccd894c8fed79fcc8",
+    "createdAt": "2026-05-01T10:36:52.902Z",
+    "updatedAt": "2026-05-01T10:39:13.665Z",
+    "__v": 0
+  },
+  {
+    "location": {
+      "type": "Point",
+      "coordinates": [
+        78.384608,
+        17.542507333333337
+      ]
+    },
+    "_id": "69f4833745399fe3122a72e1",
+    "title": "Free Yoga Session Tomorrow",
+    "description": "Join us for a free morning yoga session at the community park at 6 AM. Open for all age",
+    "category": "Events",
+    "radius": 3000,
+    "contact": "9123456789",
+    "expiryDate": "2026-05-02T10:40:55.149Z",
+    "status": "approved",
+    "isSuspicious": null,
+    "createdBy": "69f481bccd894c8fed79fcc8",
+    "createdAt": "2026-05-01T10:40:55.203Z",
+    "updatedAt": "2026-05-01T10:40:55.203Z",
+    "__v": 0
+  }
+]

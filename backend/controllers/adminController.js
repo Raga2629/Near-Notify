@@ -2,17 +2,47 @@ import Post from '../models/Post.js';
 import User from '../models/User.js';
 import Report from '../models/Report.js';
 
-// @desc    Get posts by status
-// @route   GET /admin/posts/status/:status
+// @desc    Get admin statistics
+// @route   GET /admin/stats
 // @access  Private/Admin
-export const getPostsByStatus = async (req, res) => {
+export const getAdminStats = async (req, res) => {
   try {
-    const { status } = req.params;
-    const posts = await Post.find({ status: status || 'pending' })
-        .populate('createdBy', 'name email trustScore')
-        .sort({ createdAt: -1 });
+    const [pendingPosts, approvedPosts, rejectedPosts, totalUsers] = await Promise.all([
+      Post.countDocuments({ status: 'pending' }),
+      Post.countDocuments({ status: 'approved' }),
+      Post.countDocuments({ status: 'rejected' }),
+      User.countDocuments()
+    ]);
+    res.json({ stats: { pendingPosts, approvedPosts, rejectedPosts, totalUsers } });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Get posts for admin (handles status from query)
+// @route   GET /admin/posts?status=xxx
+// @access  Private/Admin
+export const getAdminPosts = async (req, res) => {
+  try {
+    const { status } = req.query;
     
-    res.json(posts);
+    if (status === 'reported') {
+      return getReportedPosts(req, res);
+    }
+
+    // Populate createdBy only
+    const posts = await Post.find({ status: status || 'pending' })
+        .populate('createdBy', 'name email trustScore isBlocked')
+        .sort({ createdAt: -1 });
+
+    // Map createdBy to author for frontend compatibility
+    const mappedPosts = posts.map(p => {
+      const postObj = p.toObject();
+      postObj.author = postObj.createdBy;
+      return postObj;
+    });
+    
+    res.json({ posts: mappedPosts });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -101,26 +131,30 @@ export const getReportedPosts = async (req, res) => {
 
     const result = posts.map(post => {
       const reportData = reports.find(r => r._id.toString() === post._id.toString());
-      return { ...post.toObject(), reportCount: reportData?.count || 0, reportReasons: reportData?.reasons || [] };
+      const postObj = post.toObject();
+      postObj.author = postObj.createdBy;
+      return { ...postObj, reportCount: reportData?.count || 0, reportReasons: reportData?.reasons || [] };
     }).sort((a, b) => b.reportCount - a.reportCount);
 
-    res.json(result);
+    res.json({ posts: result });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
-// @desc    Block a user
-// @route   PUT /admin/users/:id/block
+// @desc    Toggle a user's blocked status
+// @route   PUT /admin/users/:id/toggle-active
 // @access  Private/Admin
-export const blockUser = async (req, res) => {
+export const toggleUserActive = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
     if (user.role === 'admin') return res.status(400).json({ message: 'Cannot block an admin' });
 
-    await User.updateOne({ _id: user._id }, { $set: { isBlocked: true } });
-    res.json({ message: `User ${user.name} has been blocked.` });
+    const newBlockedStatus = !user.isBlocked;
+    await User.updateOne({ _id: user._id }, { $set: { isBlocked: newBlockedStatus } });
+    
+    res.json({ message: `User ${user.name} has been ${newBlockedStatus ? 'blocked' : 'unblocked'}.` });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
